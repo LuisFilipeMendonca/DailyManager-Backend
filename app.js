@@ -1,9 +1,30 @@
 import express from "express";
-const app = express();
-const port = 3001;
+import dotenv from "dotenv";
+dotenv.config();
+import helmet from "helmet";
+import cors from "cors";
+import { resolve } from "path";
 
-app.get("/", (req, res) => {
-  res.json({ message: "Hello world" });
-});
+import homeRoutes from "./src/routes/home";
 
-app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
+class App {
+  constructor() {
+    this.app = express();
+    this.middlewares();
+    this.routes();
+  }
+
+  middlewares() {
+    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(express.json());
+    this.app.use(helmet());
+    this.app.use(cors());
+    this.app.use(express.static(resolve(__dirname, "uploads")));
+  }
+
+  routes() {
+    this.app.use("/", homeRoutes);
+  }
+}
+
+export default new App().app;
