@@ -14,7 +14,11 @@ class ContactController {
       }
 
       try {
-        const data = { ...req.body, photo: req.file.filename };
+        let data = { ...req.body };
+
+        if (req.file) {
+          data = { ...data, photo: req.file.filename };
+        }
 
         const contact = await Contact.create(data);
 
@@ -38,6 +42,7 @@ class ContactController {
 
       try {
         let data = { ...req.body };
+
         const { id } = req.params;
 
         if (req.file) {

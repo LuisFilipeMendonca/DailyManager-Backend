@@ -10,6 +10,7 @@ import "./src/config/database";
 
 import homeRoutes from "./src/routes/home";
 import contactsRoutes from "./src/routes/contacts";
+import usersRoutes from "./src/routes/users";
 
 class App {
   constructor() {
@@ -29,6 +30,7 @@ class App {
   routes() {
     this.app.use("/", homeRoutes);
     this.app.use("/contacts", contactsRoutes);
+    this.app.use("/users", usersRoutes);
   }
 }
 

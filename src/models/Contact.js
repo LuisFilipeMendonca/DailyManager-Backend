@@ -12,11 +12,27 @@ Contact.init(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isUnique: async function (value, next) {
+          const contact = await Contact.findOne({ where: { name: value } });
+
+          if (contact) {
+            return next("Already have a contact with that name");
+          }
+
+          return next();
+        },
+      },
     },
     email: {
       type: DataTypes.STRING,
       allowNull: true,
       defaultValue: null,
+      validate: {
+        isEmail: {
+          msg: "Please enter a valid email",
+        },
+      },
     },
     phone: {
       type: DataTypes.STRING,
