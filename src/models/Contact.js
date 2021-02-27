@@ -1,6 +1,7 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 
 import dbConfig from "../config/database";
+import appConfig from "../config/app";
 
 const sequelize = new Sequelize(dbConfig);
 
@@ -16,6 +17,27 @@ Contact.init(
       type: DataTypes.STRING,
       allowNull: true,
       defaultValue: null,
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: "",
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: "",
+    },
+    photo: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: null,
+    },
+    photoUrl: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return `${appConfig.url}/images/${this.getDataValue("photo")}`;
+      },
     },
     createdAt: {
       type: DataTypes.DATE,

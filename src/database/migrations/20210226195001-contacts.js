@@ -18,6 +18,21 @@ module.exports = {
         allowNull: true,
         defaultValue: null,
       },
+      phone: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: "",
+      },
+      address: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: "",
+      },
+      photo: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null,
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,

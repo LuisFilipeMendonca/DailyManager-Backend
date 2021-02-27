@@ -1,11 +1,15 @@
 import express from "express";
 import dotenv from "dotenv";
-dotenv.config();
 import helmet from "helmet";
 import cors from "cors";
 import { resolve } from "path";
 
+dotenv.config();
+
+import "./src/config/database";
+
 import homeRoutes from "./src/routes/home";
+import contactsRoutes from "./src/routes/contacts";
 
 class App {
   constructor() {
@@ -24,6 +28,7 @@ class App {
 
   routes() {
     this.app.use("/", homeRoutes);
+    this.app.use("/contacts", contactsRoutes);
   }
 }
 
