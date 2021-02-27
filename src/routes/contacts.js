@@ -4,6 +4,7 @@ import contactController from "../controllers/Contact";
 
 const router = new Router();
 
+router.get("/:userId", contactController.get);
 router.post("/", contactController.post);
 router.put("/:id", contactController.update);
 router.delete("/:id", contactController.delete);

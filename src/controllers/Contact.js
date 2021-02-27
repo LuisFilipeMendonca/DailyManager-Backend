@@ -14,7 +14,7 @@ class ContactController {
       }
 
       try {
-        let data = { ...req.body };
+        let data = { ...req.body, userId: 1 };
 
         if (req.file) {
           data = { ...data, photo: req.file.filename };
@@ -31,6 +31,18 @@ class ContactController {
         console.log(e);
       }
     });
+  }
+
+  async get(req, res) {
+    try {
+      const { userId } = req.params;
+
+      const contacts = await Contact.findAll({ where: { userId } });
+
+      return res.status(200).json(contacts);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async update(req, res) {

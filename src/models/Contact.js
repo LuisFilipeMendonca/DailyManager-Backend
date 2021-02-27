@@ -2,6 +2,7 @@ import { Sequelize, DataTypes, Model } from "sequelize";
 
 import dbConfig from "../config/database";
 import appConfig from "../config/app";
+import User from "./User";
 
 const sequelize = new Sequelize(dbConfig);
 
@@ -14,7 +15,16 @@ Contact.init(
       allowNull: false,
       validate: {
         isUnique: async function (value, next) {
-          const contact = await Contact.findOne({ where: { name: value } });
+          const contact = await User.findByPk(this.userId, {
+            include: [
+              {
+                model: Contact,
+                where: {
+                  name: value,
+                },
+              },
+            ],
+          });
 
           if (contact) {
             return next("Already have a contact with that name");
@@ -71,5 +81,8 @@ Contact.init(
     modelName: "Contact",
   }
 );
+
+Contact.belongsTo(User, { foreignKey: "userId" });
+User.hasOne(Contact, { foreignKey: "userId" });
 
 export default Contact;

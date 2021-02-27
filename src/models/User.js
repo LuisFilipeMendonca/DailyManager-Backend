@@ -2,6 +2,7 @@ import { Sequelize, DataTypes, Model } from "sequelize";
 import bcrypt from "bcrypt";
 
 import dbConfig from "../config/database";
+import Contact from "./Contact";
 
 const sequelize = new Sequelize(dbConfig);
 
