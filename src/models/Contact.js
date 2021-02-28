@@ -38,11 +38,6 @@ Contact.init(
       type: DataTypes.STRING,
       allowNull: true,
       defaultValue: null,
-      validate: {
-        isEmail: {
-          msg: "Please enter a valid email",
-        },
-      },
     },
     phone: {
       type: DataTypes.STRING,
