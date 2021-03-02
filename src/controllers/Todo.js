@@ -45,6 +45,7 @@ class TodoController {
             },
           },
         },
+        order: [["date", "ASC"]],
       });
 
       return res.status(200).json(todos);
