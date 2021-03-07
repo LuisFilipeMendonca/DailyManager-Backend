@@ -17,9 +17,19 @@ Todo.init(
         },
       },
     },
+    time: {
+      type: DataTypes.TIME,
+      allowNull: true,
+      defaultValue: null,
+    },
     date: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
+    },
+    checked: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
     },
   },
   { sequelize, modelName: "Todo" }

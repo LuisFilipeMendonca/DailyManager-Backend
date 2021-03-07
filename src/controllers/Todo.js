@@ -1,16 +1,17 @@
-import { Op } from "sequelize";
+import sequelize, { fn } from "sequelize";
 
 import Todo from "../models/Todo";
 
 class TodoController {
   async post(req, res) {
     try {
-      const { time, date, description } = req.body;
+      const { time, date, description, userId } = req.body;
 
       const data = {
         description,
-        date: new Date(`${date}:${time}`),
-        userId: 1,
+        time,
+        date: new Date(date),
+        userId,
       };
 
       const todo = await Todo.create(data);
@@ -29,23 +30,12 @@ class TodoController {
     try {
       const { userId, date } = req.params;
 
-      const minDate = new Date(+date);
-      const maxDate = new Date(+date + 24 * 60 * 60 * 1000);
-
-      console.log("MinDate:", minDate);
-      console.log("MaxDate:", maxDate);
-
       const todos = await Todo.findAll({
         where: {
           userId,
-          date: {
-            [Op.and]: {
-              [Op.gte]: minDate,
-              [Op.lt]: maxDate,
-            },
-          },
+          date: new Date(+date),
         },
-        order: [["date", "ASC"]],
+        order: [fn("isnull", sequelize.col("time")), ["time", "ASC"]],
       });
 
       return res.status(200).json(todos);
@@ -77,11 +67,12 @@ class TodoController {
   async update(req, res) {
     try {
       const { id } = req.params;
-      const { time, date, description } = req.body;
-      const data = {
-        description,
-        date: new Date(`${date}:${time}`),
-      };
+      // const { time, date, description } = req.body;
+      // const data = {
+      //   description,
+      //   time,
+      //   date: new Date(date),
+      // };
 
       const todo = await Todo.findByPk(id);
 
@@ -91,7 +82,7 @@ class TodoController {
         });
       }
 
-      await todo.update(data);
+      await todo.update(req.body);
 
       return res.status(200).json(todo);
     } catch (e) {

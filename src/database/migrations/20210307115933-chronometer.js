@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("todos", {
+    await queryInterface.createTable("chronometers", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -11,19 +11,11 @@ module.exports = {
       },
       description: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       time: {
-        type: Sequelize.TIME,
-        allowNull: true,
-      },
-      date: {
-        type: Sequelize.DATEONLY,
+        type: Sequelize.INTEGER,
         allowNull: false,
-      },
-      checked: {
-        type: Sequelize.BOOLEAN,
-        allowNull: true,
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -50,6 +42,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("todos");
+    await queryInterface.dropTable("chronometers");
   },
 };
