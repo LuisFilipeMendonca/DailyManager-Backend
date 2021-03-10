@@ -13,6 +13,7 @@ import contactsRoutes from "./src/routes/contacts";
 import usersRoutes from "./src/routes/users";
 import todosRoutes from "./src/routes/todos";
 import chronometersRoutes from "./src/routes/chronometers";
+import accountsRoutes from "./src/routes/accounts";
 
 class App {
   constructor() {
@@ -35,6 +36,7 @@ class App {
     this.app.use("/users", usersRoutes);
     this.app.use("/todos", todosRoutes);
     this.app.use("/chronometers", chronometersRoutes);
+    this.app.use("/accounts", accountsRoutes);
   }
 }
 

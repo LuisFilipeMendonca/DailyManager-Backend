@@ -34,6 +34,27 @@ class ChronometerController {
     }
   }
 
+  async update(req, res) {
+    try {
+      let data = { ...req.body };
+      const { id } = req.params;
+
+      const chronometer = await Chronometer.findByPk(id);
+
+      if (!chronometer) {
+        return res.status(400).json({
+          errorMsg: "The contact you're trying to update doesn't exist",
+        });
+      }
+
+      await chronometer.update(data);
+
+      return res.status(200).json(chronometer);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   async delete(req, res) {
     try {
       const { id } = req.params;
