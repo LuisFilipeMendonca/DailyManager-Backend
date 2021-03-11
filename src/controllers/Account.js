@@ -1,6 +1,10 @@
+import { Op } from "sequelize";
+
 import Account from "../models/Account";
 import AccountMonth from "../models/AccountMonth";
 import AccountTransation from "../models/AccountTransation";
+
+import Dates from "../helpers/Dates";
 
 class AccountController {
   async post(req, res) {
@@ -55,9 +59,10 @@ class AccountController {
     try {
       const { timestamps, userId } = req.params;
 
-      const date = new Date(+timestamps);
-      const year = date.getFullYear();
-      const month = date.getMonth();
+      const date = new Dates(timestamps);
+      const year = date.getYear();
+      const minDate = date.getMinDate();
+      const maxDate = date.getMaxDate();
 
       const account = await Account.findOne({
         where: {
@@ -72,6 +77,13 @@ class AccountController {
             include: [
               {
                 model: AccountTransation,
+                required: false,
+                where: {
+                  createdAt: {
+                    [Op.gte]: minDate,
+                    [Op.lte]: maxDate,
+                  },
+                },
               },
             ],
           },
