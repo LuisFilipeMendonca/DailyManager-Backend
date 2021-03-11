@@ -1,7 +1,7 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 
 import dbConfig from "../config/database";
-import AccountYear from "./AccountYear";
+import Account from "./Account";
 
 const sequelize = new Sequelize(dbConfig);
 
@@ -9,6 +9,10 @@ class AccountMonth extends Model {}
 
 AccountMonth.init(
   {
+    year: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
     month: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -30,7 +34,7 @@ AccountMonth.init(
   }
 );
 
-AccountMonth.belongsTo(AccountYear, { foreignKey: "yearId" });
-AccountYear.hasMany(AccountMonth, { foreignKey: "yearId" });
+AccountMonth.belongsTo(Account, { foreignKey: "accountId" });
+Account.hasMany(AccountMonth, { foreignKey: "accountId" });
 
 export default AccountMonth;

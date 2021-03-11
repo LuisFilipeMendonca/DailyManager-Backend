@@ -9,6 +9,10 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
+      year: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       month: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -21,12 +25,12 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: true,
       },
-      yearId: {
+      accountId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        field: "year_id",
+        field: "account_id",
         references: {
-          model: "account_years",
+          model: "accounts",
           key: "id",
         },
         onDelete: "CASCADE",
