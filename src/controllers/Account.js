@@ -9,11 +9,9 @@ import Dates from "../helpers/Dates";
 class AccountController {
   async post(req, res) {
     try {
-      const { date, amount, description, userId, type } = req.body;
+      const { transactionDate, amount, description, userId, type } = req.body;
 
-      const transationDate = new Date(date);
-      const transactionYear = transationDate.getFullYear();
-      const transactionMonth = transationDate.getMonth();
+      const date = new Dates(transactionDate);
 
       const account = await Account.findOrCreate({
         where: { userId },
@@ -24,8 +22,8 @@ class AccountController {
       const accountMonth = await AccountMonth.findOrCreate({
         where: {
           accountId,
-          year: transactionYear,
-          month: transactionMonth,
+          year: date.getYear(),
+          month: date.getMonth(),
         },
       });
 
@@ -59,10 +57,7 @@ class AccountController {
     try {
       const { timestamps, userId } = req.params;
 
-      const date = new Dates(timestamps);
-      const year = date.getYear();
-      const minDate = date.getMinDate();
-      const maxDate = date.getMaxDate();
+      const date = new Dates(+timestamps);
 
       const account = await Account.findOne({
         where: {
@@ -72,7 +67,7 @@ class AccountController {
           {
             model: AccountMonth,
             where: {
-              year,
+              year: date.getYear(),
             },
             include: [
               {
@@ -80,8 +75,8 @@ class AccountController {
                 required: false,
                 where: {
                   createdAt: {
-                    [Op.gte]: minDate,
-                    [Op.lte]: maxDate,
+                    [Op.gte]: date.getMinDate(),
+                    [Op.lte]: date.getMaxDate(),
                   },
                 },
               },
@@ -89,6 +84,8 @@ class AccountController {
           },
         ],
       });
+
+      console.log(account);
 
       return res.status(200).json(account);
     } catch (e) {
@@ -103,15 +100,13 @@ class AccountController {
       const accountTransaction = await AccountTransation.findByPk(id);
       const { amount, type, createdAt } = accountTransaction;
 
-      const date = new Date(createdAt);
-      const year = date.getFullYear();
-      const month = date.getMonth();
+      const date = new Dates(createdAt);
 
       const account = await Account.findOne({ where: { userId } });
       const { id: accountId, balance } = account;
 
       const accountMonth = await AccountMonth.findOne({
-        where: { accountId, year, month },
+        where: { accountId, year: date.getYear(), month: date.getMonth() },
       });
       const { profit, expenses } = accountMonth;
 

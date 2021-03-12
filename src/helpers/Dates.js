@@ -1,8 +1,8 @@
 import months from "../constants/Dates";
 
 class Dates {
-  constructor(timestamps) {
-    this.date = new Date(+timestamps);
+  constructor(date) {
+    this.date = new Date(date);
     this.months = this.isLeapYear(months);
   }
 
