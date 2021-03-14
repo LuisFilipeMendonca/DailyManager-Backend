@@ -7,9 +7,9 @@ class UserController {
 
       const user = await User.create(data);
 
-      return res.status(200).json({ user });
+      return res.status(200).json(user);
     } catch (e) {
-      console.log("Controller:", e);
+      console.log(e);
     }
   }
 }

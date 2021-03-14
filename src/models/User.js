@@ -9,8 +9,12 @@ class User extends Model {}
 
 User.init(
   {
-    name: {
-      type: DataTypes,
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastName: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     email: {
@@ -44,6 +48,14 @@ User.init(
     passwordHash: {
       type: DataTypes.STRING,
       field: "password_hash",
+    },
+    name: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return `${this.getDataValue("firstName")} ${this.getDataValue(
+          "lastName"
+        )}`;
+      },
     },
   },
   {
