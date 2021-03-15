@@ -9,10 +9,12 @@ class TodoController {
 
       const data = {
         description,
-        time,
+        time: time.length > 0 ? time : null,
         date: new Date(date),
         userId,
       };
+
+      console.log(data);
 
       const todo = await Todo.create(data);
 

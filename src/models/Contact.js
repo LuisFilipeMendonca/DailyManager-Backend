@@ -37,7 +37,7 @@ Contact.init(
     email: {
       type: DataTypes.STRING,
       allowNull: true,
-      defaultValue: null,
+      defaultValue: "",
     },
     phone: {
       type: DataTypes.STRING,

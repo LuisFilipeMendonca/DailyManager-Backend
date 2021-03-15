@@ -14,7 +14,7 @@ class ContactController {
       }
 
       try {
-        let data = { ...req.body, userId: 1 };
+        let data = { ...req.body, userId: 2 };
 
         if (req.file) {
           data = { ...data, photo: req.file.filename };
