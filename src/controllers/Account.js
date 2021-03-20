@@ -85,7 +85,11 @@ class AccountController {
         ],
       });
 
-      console.log(account);
+      if (!account) {
+        return res
+          .status(400)
+          .json({ errorMsg: "Dont have an account created yet." });
+      }
 
       return res.status(200).json(account);
     } catch (e) {

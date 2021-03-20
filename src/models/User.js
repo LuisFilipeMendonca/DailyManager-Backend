@@ -62,7 +62,6 @@ User.init(
     hooks: {
       async beforeCreate(user) {
         const passwordHashed = await bcrypt.hash(user.password, 8);
-
         user.passwordHash = passwordHashed;
       },
     },
@@ -70,5 +69,10 @@ User.init(
     modelName: "User",
   }
 );
+
+User.prototype.isPasswordValid = async function (password) {
+  const isPasswordValid = await bcrypt.compare(password, this.passwordHash);
+  return isPasswordValid;
+};
 
 export default User;

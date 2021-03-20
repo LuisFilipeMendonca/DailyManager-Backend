@@ -14,8 +14,6 @@ class TodoController {
         userId,
       };
 
-      console.log(data);
-
       const todo = await Todo.create(data);
 
       if (!todo) {

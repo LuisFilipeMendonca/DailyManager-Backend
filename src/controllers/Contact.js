@@ -14,7 +14,7 @@ class ContactController {
       }
 
       try {
-        let data = { ...req.body, userId: 2 };
+        let data = { ...req.body };
 
         if (req.file) {
           data = { ...data, photo: req.file.filename };
@@ -26,7 +26,11 @@ class ContactController {
           return res.status(400).json({ errorMsg: "Something went wrong" });
         }
 
-        return res.status(200).json(contact);
+        const { id, name, email, phone, address, photo, photoUrl } = contact;
+
+        return res
+          .status(200)
+          .json({ id, name, email, phone, address, photo, photoUrl });
       } catch (e) {
         console.log(e);
       }
@@ -37,7 +41,18 @@ class ContactController {
     try {
       const { userId } = req.params;
 
-      const contacts = await Contact.findAll({ where: { userId } });
+      const contacts = await Contact.findAll({
+        where: { userId },
+        attributes: [
+          "id",
+          "name",
+          "email",
+          "phone",
+          "address",
+          "photo",
+          "photoUrl",
+        ],
+      });
 
       return res.status(200).json(contacts);
     } catch (e) {
@@ -55,13 +70,13 @@ class ContactController {
       try {
         let data = { ...req.body };
 
-        const { id } = req.params;
+        const { id: contactId } = req.params;
 
         if (req.file) {
           data = { ...data, photo: req.file.filename };
         }
 
-        const contact = await Contact.findByPk(id);
+        const contact = await Contact.findByPk(contactId);
 
         if (!contact) {
           return res.status(400).json({
@@ -69,9 +84,20 @@ class ContactController {
           });
         }
 
-        await contact.update(data);
+        const updatedContact = await contact.update(data);
+        const {
+          name,
+          email,
+          phone,
+          address,
+          photo,
+          photoUrl,
+          id,
+        } = updatedContact;
 
-        return res.status(200).json(contact);
+        return res
+          .status(200)
+          .json({ id, name, email, phone, address, photo, photoUrl });
       } catch (e) {
         console.log(e);
       }
