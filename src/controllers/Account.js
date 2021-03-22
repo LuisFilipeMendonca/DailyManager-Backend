@@ -9,15 +9,15 @@ import Dates from "../helpers/Dates";
 class AccountController {
   async post(req, res) {
     try {
-      const { transactionDate, amount, description, userId, type } = req.body;
+      const { transactionDate, amount, description, type } = req.body;
 
       const date = new Dates(transactionDate);
 
-      const account = await Account.findOrCreate({
-        where: { userId },
+      const account = await Account.findOne({
+        where: { userId: req.userId },
       });
 
-      const { id: accountId, balance } = account[0];
+      const { id: accountId, balance } = account;
 
       const accountMonth = await AccountMonth.findOrCreate({
         where: {
@@ -27,6 +27,8 @@ class AccountController {
         },
       });
 
+      console.log(accountMonth);
+
       const { profit, expenses, id: monthId } = accountMonth[0];
 
       const newProfit = type === "income" ? profit + amount : profit;
@@ -34,7 +36,7 @@ class AccountController {
       const newBalance =
         type === "income" ? balance + amount : balance - amount;
 
-      await account[0].update({ balance: newBalance });
+      await account.update({ balance: newBalance });
       await accountMonth[0].update({
         profit: newProfit,
         expenses: newExpenses,
@@ -55,13 +57,13 @@ class AccountController {
 
   async get(req, res) {
     try {
-      const { timestamps, userId } = req.params;
+      const { timestamps } = req.params;
 
       const date = new Dates(+timestamps);
 
       const account = await Account.findOne({
         where: {
-          userId,
+          userId: req.userId,
         },
         include: [
           {
@@ -69,6 +71,7 @@ class AccountController {
             where: {
               year: date.getYear(),
             },
+            required: false,
             include: [
               {
                 model: AccountTransation,

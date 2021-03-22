@@ -14,7 +14,7 @@ class ContactController {
       }
 
       try {
-        let data = { ...req.body };
+        let data = { ...req.body, userId: req.userId };
 
         if (req.file) {
           data = { ...data, photo: req.file.filename };
@@ -39,7 +39,7 @@ class ContactController {
 
   async get(req, res) {
     try {
-      const { userId } = req.params;
+      const userId = req.userId;
 
       const contacts = await Contact.findAll({
         where: { userId },

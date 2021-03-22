@@ -3,7 +3,7 @@ import Chronometer from "../models/Chronometer";
 class ChronometerController {
   async post(req, res) {
     try {
-      const data = { ...req.body };
+      const data = { ...req.body, userId: req.userId };
 
       const chronometer = await Chronometer.create(data);
 
@@ -19,7 +19,7 @@ class ChronometerController {
 
   async get(req, res) {
     try {
-      const { userId } = req.params;
+      const userId = req.userId;
 
       const chronometers = await Chronometer.findAll({
         where: {

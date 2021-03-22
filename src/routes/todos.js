@@ -1,12 +1,13 @@
 import { Router } from "express";
 
 import todoController from "../controllers/Todo";
+import loginRequired from "../middlewares/loginRequired";
 
 const router = new Router();
 
-router.post("/", todoController.post);
-router.get("/:userId/:date", todoController.get);
-router.delete("/:id", todoController.delete);
-router.put("/:id", todoController.update);
+router.post("/", loginRequired, todoController.post);
+router.get("/:date", loginRequired, todoController.get);
+router.delete("/:id", loginRequired, todoController.delete);
+router.put("/:id", loginRequired, todoController.update);
 
 export default router;

@@ -5,13 +5,13 @@ import Todo from "../models/Todo";
 class TodoController {
   async post(req, res) {
     try {
-      const { time, date, description, userId } = req.body;
+      const { time, date, description } = req.body;
 
       const data = {
         description,
         time: time.length > 0 ? time : null,
         date: new Date(date),
-        userId,
+        userId: req.userId,
       };
 
       const todo = await Todo.create(data);
@@ -28,7 +28,8 @@ class TodoController {
 
   async get(req, res) {
     try {
-      const { userId, date } = req.params;
+      const { date } = req.params;
+      const userId = req.userId;
 
       const todos = await Todo.findAll({
         where: {
@@ -67,12 +68,6 @@ class TodoController {
   async update(req, res) {
     try {
       const { id } = req.params;
-      // const { time, date, description } = req.body;
-      // const data = {
-      //   description,
-      //   time,
-      //   date: new Date(date),
-      // };
 
       const todo = await Todo.findByPk(id);
 
