@@ -9,7 +9,8 @@ import Dates from "../helpers/Dates";
 class AccountController {
   async post(req, res) {
     try {
-      const { transactionDate, amount, description, type } = req.body;
+      let { transactionDate, amount, description, type } = req.body;
+      amount = +amount;
 
       const date = new Dates(transactionDate);
 
@@ -26,8 +27,6 @@ class AccountController {
           month: date.getMonth(),
         },
       });
-
-      console.log(accountMonth);
 
       const { profit, expenses, id: monthId } = accountMonth[0];
 
