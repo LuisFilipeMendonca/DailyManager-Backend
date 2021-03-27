@@ -46,6 +46,7 @@ class AccountController {
         description,
         amount,
         type,
+        transactionDate,
       });
 
       return res.status(200).json(accountTransaction);
@@ -76,7 +77,7 @@ class AccountController {
                 model: AccountTransation,
                 required: false,
                 where: {
-                  createdAt: {
+                  transactionDate: {
                     [Op.gte]: date.getMinDate(),
                     [Op.lte]: date.getMaxDate(),
                   },

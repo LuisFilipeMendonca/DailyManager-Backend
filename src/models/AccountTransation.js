@@ -21,6 +21,11 @@ AccountTransaction.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    transactionDate: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      field: "transaction_date",
+    },
   },
   {
     sequelize,

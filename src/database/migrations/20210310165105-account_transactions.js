@@ -21,6 +21,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      transactionDate: {
+        type: Sequelize.DATEONLY,
+        allowNull: false,
+        field: "transaction_date",
+      },
       monthId: {
         type: Sequelize.INTEGER,
         allowNull: false,
