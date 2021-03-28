@@ -49,7 +49,7 @@ class AccountController {
         transactionDate,
       });
 
-      return res.status(200).json(accountTransaction);
+      return res.status(200).json({ accountMonth, accountTransaction });
     } catch (e) {
       console.log(e);
     }
