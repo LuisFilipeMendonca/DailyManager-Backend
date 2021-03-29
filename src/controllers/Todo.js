@@ -22,7 +22,11 @@ class TodoController {
 
       return res.status(200).json(todo);
     } catch (e) {
-      console.log(e);
+      const errors = e.errors.map((error) => ({
+        field: error.path,
+        errorMsg: error.message,
+      }));
+      return res.status(400).json(errors);
     }
   }
 
@@ -41,7 +45,9 @@ class TodoController {
 
       return res.status(200).json(todos);
     } catch (e) {
-      console.log(e);
+      return res
+        .status(400)
+        .json({ errorMsg: "Something went wrong. Try again later." });
     }
   }
 
@@ -61,7 +67,9 @@ class TodoController {
 
       return res.status(200).json({ msg: "Todo deleted successfully" });
     } catch (e) {
-      console.log(e);
+      return res
+        .status(400)
+        .json({ errorMsg: "Something went wrong. Try again later." });
     }
   }
 
@@ -81,7 +89,11 @@ class TodoController {
 
       return res.status(200).json(todo);
     } catch (e) {
-      console.log(e);
+      const errors = e.errors.map((error) => ({
+        field: error.path,
+        errorMsg: error.message,
+      }));
+      return res.status(400).json(errors);
     }
   }
 }

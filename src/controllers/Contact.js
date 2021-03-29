@@ -9,8 +9,9 @@ class ContactController {
   async post(req, res) {
     return upload(req, res, async (err) => {
       if (err) {
-        // NEEDS UPDATE
-        return res.status(400).json({ errorMsg: err.code });
+        return res
+          .status(400)
+          .json([{ field: "contactPhoto", errorMsg: err.code }]);
       }
 
       try {
@@ -32,7 +33,11 @@ class ContactController {
           .status(200)
           .json({ id, name, email, phone, address, photo, photoUrl });
       } catch (e) {
-        console.log(e);
+        const errors = e.errors.map((error) => ({
+          field: error.path,
+          errorMsg: error.message,
+        }));
+        return res.status(400).json(errors);
       }
     });
   }
@@ -56,15 +61,18 @@ class ContactController {
 
       return res.status(200).json(contacts);
     } catch (e) {
-      console.log(e);
+      return res
+        .status(400)
+        .json({ errorMsg: "Something went wrong. Try again later." });
     }
   }
 
   async update(req, res) {
     return upload(req, res, async (err) => {
       if (err) {
-        // NEEDS UPDATE
-        return res.status(400).json({ errorMsg: err.code });
+        return res
+          .status(400)
+          .json({ field: "contactPhoto", errorMsg: err.code });
       }
 
       try {
@@ -99,7 +107,11 @@ class ContactController {
           .status(200)
           .json({ id, name, email, phone, address, photo, photoUrl });
       } catch (e) {
-        console.log(e);
+        const errors = e.errors.map((error) => ({
+          field: error.path,
+          errorMsg: error.message,
+        }));
+        return res.status(400).json(errors);
       }
     });
   }
@@ -120,7 +132,9 @@ class ContactController {
 
       return res.status(200).json({ msg: "Contact deleted successfully" });
     } catch (e) {
-      console.log(e);
+      return res
+        .status(400)
+        .json({ errorMsg: "Something went wrong. Try again later." });
     }
   }
 }

@@ -9,11 +9,21 @@ class UserController {
       const user = await User.create(data);
       const { id } = user;
 
-      await Account.create({ userId: id });
+      const account = await Account.create({ userId: id });
+
+      if (!user || !account) {
+        return res
+          .status(400)
+          .json({ errorMsg: "Something went wrong. Try again later." });
+      }
 
       return res.status(200).json(user);
     } catch (e) {
-      console.log(e);
+      const errors = e.errors.map((error) => ({
+        field: error.path,
+        errorMsg: error.message,
+      }));
+      return res.status(400).json(errors);
     }
   }
 }

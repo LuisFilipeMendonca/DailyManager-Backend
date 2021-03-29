@@ -13,7 +13,7 @@ class ChronometerController {
 
       return res.status(200).json(chronometer);
     } catch (e) {
-      console.log(e);
+      return res.status(400).json({ errorMsg: "Something went wrong" });
     }
   }
 
@@ -30,7 +30,7 @@ class ChronometerController {
 
       return res.status(200).json(chronometers);
     } catch (e) {
-      console.log(e);
+      return res.status(400).json({ errorMsg: "Something went wrong" });
     }
   }
 
@@ -43,7 +43,7 @@ class ChronometerController {
 
       if (!chronometer) {
         return res.status(400).json({
-          errorMsg: "The contact you're trying to update doesn't exist",
+          errorMsg: "The chronometer you're trying to update doesn't exist",
         });
       }
 
@@ -51,7 +51,7 @@ class ChronometerController {
 
       return res.status(200).json(chronometer);
     } catch (e) {
-      console.log(e);
+      return res.status(400).json({ errorMsg: "Something went wrong" });
     }
   }
 
@@ -63,7 +63,7 @@ class ChronometerController {
 
       if (!chronometer) {
         return res.status(400).json({
-          errorMsg: "The contact you're trying to delete doesn't exist",
+          errorMsg: "The chronometer you're trying to delete doesn't exist",
         });
       }
 
@@ -71,7 +71,7 @@ class ChronometerController {
 
       return res.status(200).json({ msg: "Chronometer deleted successfully" });
     } catch (e) {
-      console.log(e);
+      return res.status(400).json({ errorMsg: "Something went wrong" });
     }
   }
 }

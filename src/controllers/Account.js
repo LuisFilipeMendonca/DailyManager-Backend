@@ -18,6 +18,12 @@ class AccountController {
         where: { userId: req.userId },
       });
 
+      if (!account) {
+        return res
+          .status(400)
+          .json({ errorMsg: "Something went wrong. Try again later." });
+      }
+
       const { id: accountId, balance } = account;
 
       const accountMonth = await AccountMonth.findOrCreate({
@@ -27,6 +33,12 @@ class AccountController {
           month: date.getMonth(),
         },
       });
+
+      if (!accountMonth) {
+        return res
+          .status(400)
+          .json({ errorMsg: "Something went wrong. Try again later." });
+      }
 
       const { profit, expenses, id: monthId } = accountMonth[0];
 
@@ -49,9 +61,19 @@ class AccountController {
         transactionDate,
       });
 
+      if (!accountTransaction) {
+        return res
+          .status(400)
+          .json({ errorMsg: "Something went wrong. Try again later." });
+      }
+
       return res.status(200).json({ accountMonth, accountTransaction });
     } catch (e) {
-      console.log(e);
+      const errors = e.errors.map((error) => ({
+        field: error.path,
+        errorMsg: error.message,
+      }));
+      return res.status(400).json(errors);
     }
   }
 
@@ -88,15 +110,11 @@ class AccountController {
         ],
       });
 
-      if (!account) {
-        return res
-          .status(400)
-          .json({ errorMsg: "Dont have an account created yet." });
-      }
-
       return res.status(200).json(account);
     } catch (e) {
-      console.log(e);
+      return res
+        .status(400)
+        .json({ errorMsg: "Something went wrong. Try again later." });
     }
   }
 
@@ -105,16 +123,39 @@ class AccountController {
       const { id, userId } = req.params;
 
       const accountTransaction = await AccountTransation.findByPk(id);
+
+      if (!accountTransaction) {
+        return res
+          .status(400)
+          .json({
+            errorMsg: "The transaction you're trying to delete doesn't exist.",
+          });
+      }
+
       const { amount, type, createdAt } = accountTransaction;
 
       const date = new Dates(createdAt);
 
       const account = await Account.findOne({ where: { userId } });
+
+      if (!account) {
+        return res
+          .status(400)
+          .json({ errorMsg: "Something went wrong. Try again later." });
+      }
+
       const { id: accountId, balance } = account;
 
       const accountMonth = await AccountMonth.findOne({
         where: { accountId, year: date.getYear(), month: date.getMonth() },
       });
+
+      if (!accountMonth) {
+        return res
+          .status(400)
+          .json({ errorMsg: "Something went wrong. Try again later." });
+      }
+
       const { profit, expenses } = accountMonth;
 
       const newBalance =
@@ -128,7 +169,9 @@ class AccountController {
 
       return res.status(200).json(accountTransaction);
     } catch (e) {
-      console.log(e);
+      return res
+        .status(400)
+        .json({ errorMsg: "Something went wrong. Try again later." });
     }
   }
 }

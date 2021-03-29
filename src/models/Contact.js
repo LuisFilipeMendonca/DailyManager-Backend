@@ -32,6 +32,12 @@ Contact.init(
 
           return next();
         },
+        notEmpty: {
+          msg: "A name is required",
+        },
+        notNull: {
+          msg: "A name is required",
+        },
       },
     },
     email: {

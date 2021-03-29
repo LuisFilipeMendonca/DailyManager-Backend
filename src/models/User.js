@@ -12,10 +12,26 @@ User.init(
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: "A first name is required",
+        },
+        notEmpty: {
+          msg: "A first name is required",
+        },
+      },
     },
     lastName: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: "A last name is required",
+        },
+        notEmpty: {
+          msg: "A last name is required",
+        },
+      },
     },
     email: {
       type: DataTypes.STRING,
@@ -42,6 +58,9 @@ User.init(
         len: {
           args: [8, 24],
           msg: "Your password needs to have between 8 and 24 characters",
+        },
+        notNull: {
+          msg: "A password is required",
         },
       },
     },

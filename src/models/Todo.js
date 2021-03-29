@@ -15,6 +15,9 @@ Todo.init(
         notEmpty: {
           msg: "A description is required",
         },
+        notNull: {
+          msg: "A description is required",
+        },
       },
     },
     time: {
@@ -25,6 +28,14 @@ Todo.init(
     date: {
       type: DataTypes.DATEONLY,
       allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "A date is required",
+        },
+        notNull: {
+          msg: "A date is required",
+        },
+      },
     },
     checked: {
       type: DataTypes.BOOLEAN,

@@ -16,6 +16,14 @@ AccountMonth.init(
     month: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "A date is required",
+        },
+        notNull: {
+          msg: "A date is required",
+        },
+      },
     },
     profit: {
       type: DataTypes.FLOAT,

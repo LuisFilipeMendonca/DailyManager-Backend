@@ -12,19 +12,54 @@ AccountTransaction.init(
     amount: {
       type: DataTypes.FLOAT,
       allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "An amount is required",
+        },
+        notNull: {
+          msg: "An amount is required",
+        },
+        isNumeric: {
+          msg: "The mount needs to be a number",
+        },
+      },
     },
     description: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "A description is required",
+        },
+        notNull: {
+          msg: "A description is required",
+        },
+      },
     },
     type: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "A type is required",
+        },
+        notNull: {
+          msg: "A type is required",
+        },
+      },
     },
     transactionDate: {
       type: DataTypes.DATEONLY,
       allowNull: false,
       field: "transaction_date",
+      validate: {
+        notEmpty: {
+          msg: "A date is required",
+        },
+        notNull: {
+          msg: "A date is required",
+        },
+      },
     },
   },
   {
