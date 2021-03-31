@@ -30,7 +30,7 @@ class TokenController {
       }
 
       const { id, name } = user;
-      const token = jwt.sign({ email, id }, "secret", { expiresIn: "1h" });
+      const token = jwt.sign({ email, id }, "secret", { expiresIn: 60 });
 
       return res.status(200).json({ id, token, email, name });
     } catch (e) {

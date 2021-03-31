@@ -20,7 +20,7 @@ class AccountController {
 
       if (!account) {
         return res
-          .status(400)
+          .status(500)
           .json({ errorMsg: "Something went wrong. Try again later." });
       }
 
@@ -36,7 +36,7 @@ class AccountController {
 
       if (!accountMonth) {
         return res
-          .status(400)
+          .status(500)
           .json({ errorMsg: "Something went wrong. Try again later." });
       }
 
@@ -63,7 +63,7 @@ class AccountController {
 
       if (!accountTransaction) {
         return res
-          .status(400)
+          .status(500)
           .json({ errorMsg: "Something went wrong. Try again later." });
       }
 
@@ -113,7 +113,7 @@ class AccountController {
       return res.status(200).json(account);
     } catch (e) {
       return res
-        .status(400)
+        .status(500)
         .json({ errorMsg: "Something went wrong. Try again later." });
     }
   }
@@ -125,11 +125,9 @@ class AccountController {
       const accountTransaction = await AccountTransation.findByPk(id);
 
       if (!accountTransaction) {
-        return res
-          .status(400)
-          .json({
-            errorMsg: "The transaction you're trying to delete doesn't exist.",
-          });
+        return res.status(404).json({
+          errorMsg: "The transaction you're trying to delete doesn't exist.",
+        });
       }
 
       const { amount, type, createdAt } = accountTransaction;
@@ -140,7 +138,7 @@ class AccountController {
 
       if (!account) {
         return res
-          .status(400)
+          .status(500)
           .json({ errorMsg: "Something went wrong. Try again later." });
       }
 
@@ -152,7 +150,7 @@ class AccountController {
 
       if (!accountMonth) {
         return res
-          .status(400)
+          .status(500)
           .json({ errorMsg: "Something went wrong. Try again later." });
       }
 
@@ -170,7 +168,7 @@ class AccountController {
       return res.status(200).json(accountTransaction);
     } catch (e) {
       return res
-        .status(400)
+        .status(500)
         .json({ errorMsg: "Something went wrong. Try again later." });
     }
   }

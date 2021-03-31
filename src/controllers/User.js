@@ -13,7 +13,7 @@ class UserController {
 
       if (!user || !account) {
         return res
-          .status(400)
+          .status(500)
           .json({ errorMsg: "Something went wrong. Try again later." });
       }
 

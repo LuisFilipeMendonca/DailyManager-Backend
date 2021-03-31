@@ -24,7 +24,9 @@ class ContactController {
         const contact = await Contact.create(data);
 
         if (!contact) {
-          return res.status(400).json({ errorMsg: "Something went wrong" });
+          return res
+            .status(500)
+            .json({ errorMsg: "Something went wrong. Try again later." });
         }
 
         const { id, name, email, phone, address, photo, photoUrl } = contact;
@@ -62,7 +64,7 @@ class ContactController {
       return res.status(200).json(contacts);
     } catch (e) {
       return res
-        .status(400)
+        .status(500)
         .json({ errorMsg: "Something went wrong. Try again later." });
     }
   }
@@ -87,7 +89,7 @@ class ContactController {
         const contact = await Contact.findByPk(contactId);
 
         if (!contact) {
-          return res.status(400).json({
+          return res.status(404).json({
             errorMsg: "The contact you're trying to update doesn't exist",
           });
         }
@@ -123,7 +125,7 @@ class ContactController {
       const contact = await Contact.findByPk(id);
 
       if (!contact) {
-        return res.status(400).json({
+        return res.status(404).json({
           errorMsg: "The contact you're trying to delete doesn't exist",
         });
       }
@@ -133,7 +135,7 @@ class ContactController {
       return res.status(200).json({ msg: "Contact deleted successfully" });
     } catch (e) {
       return res
-        .status(400)
+        .status(500)
         .json({ errorMsg: "Something went wrong. Try again later." });
     }
   }

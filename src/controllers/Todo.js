@@ -17,7 +17,9 @@ class TodoController {
       const todo = await Todo.create(data);
 
       if (!todo) {
-        return res.status(400).json({ errorMsg: "Something went wrong" });
+        return res
+          .status(500)
+          .json({ errorMsg: "Something went wrong. Try again later." });
       }
 
       return res.status(200).json(todo);
@@ -46,7 +48,7 @@ class TodoController {
       return res.status(200).json(todos);
     } catch (e) {
       return res
-        .status(400)
+        .status(500)
         .json({ errorMsg: "Something went wrong. Try again later." });
     }
   }
@@ -59,7 +61,7 @@ class TodoController {
 
       if (!todo) {
         return res
-          .status(400)
+          .status(404)
           .json({ errorMsg: "The todo you're trying to delete dont't exist." });
       }
 
@@ -68,7 +70,7 @@ class TodoController {
       return res.status(200).json({ msg: "Todo deleted successfully" });
     } catch (e) {
       return res
-        .status(400)
+        .status(500)
         .json({ errorMsg: "Something went wrong. Try again later." });
     }
   }
@@ -80,7 +82,7 @@ class TodoController {
       const todo = await Todo.findByPk(id);
 
       if (!todo) {
-        return res.status(400).json({
+        return res.status(404).json({
           errorMsg: "The todo you're trying to update doesn't exist",
         });
       }

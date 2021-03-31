@@ -8,12 +8,16 @@ class ChronometerController {
       const chronometer = await Chronometer.create(data);
 
       if (!chronometer) {
-        return res.status(400).json({ errorMsg: "Something went wrong" });
+        return res
+          .status(500)
+          .json({ errorMsg: "Something went wrong. Try again later." });
       }
 
       return res.status(200).json(chronometer);
     } catch (e) {
-      return res.status(400).json({ errorMsg: "Something went wrong" });
+      return res
+        .status(500)
+        .json({ errorMsg: "Something went wrong. Try again later." });
     }
   }
 
@@ -30,7 +34,9 @@ class ChronometerController {
 
       return res.status(200).json(chronometers);
     } catch (e) {
-      return res.status(400).json({ errorMsg: "Something went wrong" });
+      return res
+        .status(500)
+        .json({ errorMsg: "Something went wrong. Try again later." });
     }
   }
 
@@ -42,7 +48,7 @@ class ChronometerController {
       const chronometer = await Chronometer.findByPk(id);
 
       if (!chronometer) {
-        return res.status(400).json({
+        return res.status(404).json({
           errorMsg: "The chronometer you're trying to update doesn't exist",
         });
       }
@@ -51,7 +57,9 @@ class ChronometerController {
 
       return res.status(200).json(chronometer);
     } catch (e) {
-      return res.status(400).json({ errorMsg: "Something went wrong" });
+      return res
+        .status(500)
+        .json({ errorMsg: "Something went wrong. Try again later." });
     }
   }
 
@@ -62,7 +70,7 @@ class ChronometerController {
       const chronometer = await Chronometer.findByPk(id);
 
       if (!chronometer) {
-        return res.status(400).json({
+        return res.status(404).json({
           errorMsg: "The chronometer you're trying to delete doesn't exist",
         });
       }
@@ -71,7 +79,9 @@ class ChronometerController {
 
       return res.status(200).json({ msg: "Chronometer deleted successfully" });
     } catch (e) {
-      return res.status(400).json({ errorMsg: "Something went wrong" });
+      return res
+        .status(500)
+        .json({ errorMsg: "Something went wrong. Try again later." });
     }
   }
 }
