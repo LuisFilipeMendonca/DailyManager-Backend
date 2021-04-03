@@ -1,3 +1,5 @@
+const port = process.env.PORT || 3002;
+
 export default {
-  url: `http://localhost:${process.env.PORT}`,
+  url: `http://localhost:${port}`,
 };
