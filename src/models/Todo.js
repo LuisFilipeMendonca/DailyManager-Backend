@@ -1,8 +1,6 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
-import dbConfig from "../config/database";
+import { sequelize } from "../database";
 import User from "./User";
-
-const sequelize = new Sequelize(dbConfig);
 
 class Todo extends Model {}
 

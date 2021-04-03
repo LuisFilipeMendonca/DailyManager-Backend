@@ -1,9 +1,6 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
-
-import dbConfig from "../config/database";
+import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../database";
 import AccountMonth from "./AccountMonth";
-
-const sequelize = new Sequelize(dbConfig);
 
 class AccountTransaction extends Model {}
 

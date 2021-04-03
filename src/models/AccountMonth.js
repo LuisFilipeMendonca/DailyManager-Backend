@@ -1,16 +1,13 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
-
-import dbConfig from "../config/database";
+import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../database";
 import Account from "./Account";
-
-const sequelize = new Sequelize(dbConfig);
 
 class AccountMonth extends Model {}
 
 AccountMonth.init(
   {
     year: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     month: {

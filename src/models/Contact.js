@@ -1,10 +1,7 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
-
-import dbConfig from "../config/database";
+import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../database";
 import appConfig from "../config/app";
 import User from "./User";
-
-const sequelize = new Sequelize(dbConfig);
 
 class Contact extends Model {}
 
