@@ -29,15 +29,14 @@ class TokenController {
         ]);
       }
 
-      console.log(process.env);
-
       const { id, name } = user;
       const token = jwt.sign({ email, id }, process.env.TOKEN_SECRET, {
-        expiresIn: process.env.TOKEN_SECRET,
+        expiresIn: "1h",
       });
 
       return res.status(200).json({ id, token, email, name });
     } catch (e) {
+      console.log(e);
       const errors = e.errors.map((error) => ({
         field: error.path,
         errorMsg: error.message,

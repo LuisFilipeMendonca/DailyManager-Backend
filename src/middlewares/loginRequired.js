@@ -5,8 +5,6 @@ const loginRequired = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
 
-    console.log(authorization);
-
     if (!authorization) {
       return res
         .status(401)
@@ -15,7 +13,7 @@ const loginRequired = async (req, res, next) => {
 
     const [_, token] = authorization.split(" ");
 
-    const { id } = jwt.verify(token, "secret");
+    const { id } = jwt.verify(token, process.env.TOKEN_SECRET);
 
     if (!id) {
       return res.status(401).json({
